@@ -8,37 +8,33 @@ namespace LeetChallenges
         // Finds the minimum number of coins required to reach 'amount'.
         // It may be that not all the denominatoins in the set are required.
         // It is assumed that there is an infinite amount of coins of each denomination and the coins are ordered small to large.
-        static int CoinChange(int[] coins, int amount)
+    static int CoinChange(int[] coins, int V)
+    {
+        int moneyRemaining = V;
+        int coinsUsed = 0;
+        if(moneyRemaining == 0)
         {
-            int numCoins = 0;
-            if (coins.Length == 0)
-            {
-                return -1;
-            }
-                if (amount == 0 && coins.Length > 0)
-            {
-                return 1;
-            }
-            for (int i = coins.Length - 1; i > -1; i--)
-            {
-                // Is the amount remaining > the current denomination?
-                if (coins[i] > amount)
-                {
-                    continue;
-                }
-                // Does the amount remaining divide exactly into the current denomination?
-                if (amount % coins[i] == 0)
-                {
-                    return numCoins + (amount / coins[i]);
-                }
-                if (amount % coins[i] != 0)
-                {
-                    numCoins += (int)(amount / coins[i]);
-                    amount = amount % coins[i];
-                }
-            }
-            return -1;
+            return 0;
         }
+        for(int i = coins.Length - 1; i > -1; i--)
+        {
+            if(coins[i] > moneyRemaining)
+            {
+                continue;
+            }
+            if(moneyRemaining % coins[i] == 0)
+            {
+                coinsUsed += (moneyRemaining / coins[i]);
+                return coinsUsed;
+            }
+            else
+            {
+                coinsUsed += (moneyRemaining / coins[i]);
+                moneyRemaining = (moneyRemaining % coins[i]);
+            }
+        }
+        return -1;
+    }
 
         static void Main(string[] args)
         {
